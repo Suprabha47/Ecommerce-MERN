@@ -50,3 +50,4 @@ app.post("/sign-in", async (req, res) => {
     console.log(err);
   }
 });
+app.use((error, req, res, next) => res.send("Something went wrong!"));

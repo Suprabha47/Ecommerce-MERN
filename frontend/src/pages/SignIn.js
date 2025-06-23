@@ -1,28 +1,42 @@
-import { useState } from "react";
-import SignUpInBtn from "../utils/SignUpInBtn";
+import { useEffect, useState } from "react";
+import SignUpInBtn from "../components/SignUpInBtn";
 import axios from "axios";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+import { changeUserState } from "../redux/userSlice";
 
 const SignIn = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const navigate = useNavigate();
+  const dispatch = useDispatch();
+  const userState = useSelector((state) => state.user);
+
+  useEffect(() => {
+    console.log(userState);
+    if (userState) navigate("/dashboard");
+  }, []);
 
   const handleSubmit = (e) => {
     e.preventDefault();
     axios
       .post("http://localhost:3001/sign-in", { email, password })
       .then((response) => {
-        response.status === 200 && navigate("/dashboard");
+        if (response.status === 200) {
+          console.log(response.status);
+          console.log("in response block");
+          return dispatch(changeUserState(true)) && navigate("/dashboard");
+        }
       })
       .catch((err) => {
+        console.log("error block!");
         console.log(err);
         alert("Invalid Credentials");
         setEmail("");
         setPassword("");
       });
   };
-
+  if (userState) return <></>;
   return (
     <div className="d-flex align-items-center justify-content-center min-vh-100 bg-light">
       <form
@@ -32,7 +46,7 @@ const SignIn = () => {
       >
         <h3 className="text-center mb-2">Sign In</h3>
         <p className="text-center mb-4">
-          New to Our Product? <a href="#">Create an Account</a>
+          New to Our Product? <Link to="/sign-up">Create an Account</Link>
         </p>
 
         <div className="mb-3">
@@ -83,9 +97,7 @@ const SignIn = () => {
         </div>
 
         <div className="text-center mb-3">
-          <a href="#" className="text-decoration-none">
-            Forgot your password?
-          </a>
+          <Link className="text-decoration-none">Forgot your password?</Link>
         </div>
 
         <hr />

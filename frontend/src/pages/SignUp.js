@@ -1,25 +1,35 @@
-import { useState } from "react";
-import SignUpInBtn from "../utils/SignUpInBtn";
+import { useState, useEffect } from "react";
+import SignUpInBtn from "../components/SignUpInBtn";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
+import { Link } from "react-router-dom";
+import { useSelector } from "react-redux";
 
 const SignUp = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const navigate = useNavigate();
+  const userState = useSelector((state) => state.user);
+
+  useEffect(() => {
+    if (userState) navigate("/dashboard");
+  }, []);
 
   const handleSubmit = (e) => {
     e.preventDefault();
     axios
       .post("http://localhost:3001/sign-up", { email, password })
       .then((response) => {
-        response.status === 201
-          ? navigate("/sign-in")
-          : alert("Invalid Credentials!");
+        response.status === 201 && navigate("/sign-in");
       })
-      .catch((err) => console.log(err));
+      .catch((err) => {
+        if (err.status === 409) {
+          alert(err.response.data);
+          navigate("/sign-in");
+        }
+      });
   };
-
+  if (userState) return <></>;
   return (
     <div className="d-flex align-items-center justify-content-center min-vh-100 bg-light">
       <form
@@ -30,9 +40,9 @@ const SignUp = () => {
         <h2 className="text-center fw-bold mb-2">Create an Account</h2>
         <p className="text-center text-muted mb-4">
           Have an Account?{" "}
-          <a href="#" className="text-primary text-decoration-none">
+          <Link to="/sign-in" className="text-primary text-decoration-none">
             Sign In
-          </a>
+          </Link>
         </p>
 
         <div className="mb-3">
@@ -73,9 +83,7 @@ const SignUp = () => {
 
         <p className="text-center text-muted small">
           By creating account, you agree to our{" "}
-          <a href="#" className="text-primary">
-            Terms of Service
-          </a>
+          <Link className="text-primary">Terms of Service</Link>
         </p>
 
         <hr className="my-4" />
