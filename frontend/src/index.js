@@ -14,10 +14,6 @@ import Categories from "./components/Categories";
 import Customers from "./components/Customers";
 import Reports from "./components/Reports";
 import Coupons from "./components/Coupons";
-import Inbox from "./components/Inbox";
-import KnowledgeBase from "./components/KnowledgeBase";
-import ProductUpdates from "./components/ProductUpdates";
-import PersonalSettings from "./components/PersonalSettings";
 import GlobalSettings from "./components/GlobalSettings";
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
@@ -34,10 +30,6 @@ root.render(
           <Route path="customers" element={<Customers />} />
           <Route path="reports" element={<Reports />} />
           <Route path="coupons" element={<Coupons />} />
-          <Route path="inbox" element={<Inbox />} />
-          <Route path="knowledge-base" element={<KnowledgeBase />} />
-          <Route path="product-updates" element={<ProductUpdates />} />
-          <Route path="personal-settings" element={<PersonalSettings />} />
           <Route path="global-settings" element={<GlobalSettings />} />
         </Route>
         <Route path="/formik" element={<DummyFormik />} />
