@@ -2,10 +2,10 @@ import { Link } from "react-router-dom";
 
 const Sidebar = () => {
   return (
-    <div class="sidebar d-flex flex-column p-3">
-      <ul class="nav nav-pills flex-column">
+    <div class="sidebar d-flex flex-column p-3 sidebar text-white custom_sticky_bar">
+      <ul class="nav nav-pills flex-column mb-4">
         <li>
-          <Link to="/dashboard" class="nav-link text-white">
+          <Link to="/home" class="nav-link text-white">
             Dashboard
           </Link>
         </li>

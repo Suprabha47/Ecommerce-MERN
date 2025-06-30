@@ -6,23 +6,22 @@ import Sidebar from "../components/Sidebar";
 import { Outlet } from "react-router-dom";
 
 const Dashboard = () => {
-  const userState = useSelector((state) => state.user);
+  const { name, status } = useSelector((state) => state.user);
   const navigate = useNavigate();
 
   useEffect(() => {
-    if (!userState) {
+    if (!status) {
+      alert("Please Login!");
       navigate("/sign-in");
     }
-  }, []);
+  }, [status]);
 
-  console.log(userState);
-
-  if (!userState) return <></>;
+  if (!status) return <></>;
 
   return (
     <div className="d-flex flex-column">
-      <Header />
-      <div className="d-flex">
+      <Header userName={name} />
+      <div className="d-flex ">
         <Sidebar />
         <Outlet />
       </div>

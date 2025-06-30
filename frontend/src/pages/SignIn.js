@@ -10,12 +10,12 @@ const SignIn = () => {
   const [password, setPassword] = useState("");
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  const userState = useSelector((state) => state.user);
+  const userState = useSelector((state) => state.user.status);
 
   useEffect(() => {
-    console.log(userState);
+    console.log("sign-in: ", userState);
     if (userState) navigate("/dashboard");
-  }, []);
+  }, [userState]);
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -23,9 +23,12 @@ const SignIn = () => {
       .post("http://localhost:3001/sign-in", { email, password })
       .then((response) => {
         if (response.status === 200) {
-          console.log(response.status);
+          const name = response.data;
           console.log("in response block");
-          return dispatch(changeUserState(true)) && navigate("/dashboard");
+          return (
+            dispatch(changeUserState({ name, status: true })) &&
+            navigate("/dashboard")
+          );
         }
       })
       .catch((err) => {

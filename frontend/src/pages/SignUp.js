@@ -8,17 +8,24 @@ import { useSelector } from "react-redux";
 const SignUp = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [firstName, setFirstName] = useState("");
+  const [lastName, setLastName] = useState("");
   const navigate = useNavigate();
-  const userState = useSelector((state) => state.user);
+  const userState = useSelector((state) => state.user.status);
 
   useEffect(() => {
     if (userState) navigate("/dashboard");
-  }, []);
+  }, [userState]);
 
   const handleSubmit = (e) => {
     e.preventDefault();
     axios
-      .post("http://localhost:3001/sign-up", { email, password })
+      .post("http://localhost:3001/sign-up", {
+        firstName,
+        lastName,
+        email,
+        password,
+      })
       .then((response) => {
         response.status === 201 && navigate("/sign-in");
       })
@@ -44,7 +51,33 @@ const SignUp = () => {
             Sign In
           </Link>
         </p>
-
+        <div className="mb-3">
+          <label htmlFor="firstName" className="form-label">
+            First Name
+          </label>
+          <input
+            type="text"
+            id="firstName"
+            className="form-control "
+            placeholder="Enter First Name"
+            value={firstName}
+            onChange={(e) => setFirstName(e.target.value)}
+            required
+          />
+        </div>
+        <div className="mb-3">
+          <label htmlFor="lastName" className="form-label">
+            Last Name
+          </label>
+          <input
+            type="text"
+            id="lastName"
+            className="form-control "
+            placeholder="Enter Last Name"
+            value={lastName}
+            onChange={(e) => setLastName(e.target.value)}
+          />
+        </div>
         <div className="mb-3">
           <label htmlFor="email" className="form-label">
             Email

@@ -1,16 +1,24 @@
 body {
-  background-color: #fdf4f4;
+  background-color: #eff2f4;
   margin: 0;
   padding: 0;
 }
 .btn-dark {
   background-color: #131448;
 }
-.sidebar {
+/* .sidebar {
   width: 22%;
   height: 100vh;
   background-color: #1e2a4a;
   color: #fff;
+} */
+.custom_sticky_bar {
+  top: 3rem;
+  position: sticky;
+  width: 22%;
+  background-color: #1e2a4a;
+  color: #fff;
+  height: calc(100vh - 3rem);
 }
 
 .sidebar a {
@@ -71,4 +79,7 @@ body {
   outline: none;
   color: white;
   background-color: #0c0f1c; /* match dark navbar */
+}
+.sidebar {
+  background-color: #1e2753;
 }
