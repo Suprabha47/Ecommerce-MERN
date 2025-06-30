@@ -39,7 +39,7 @@ app.get("/productImages/:fileName", (req, res) => {
 // connecting with db
 mongoose
   .connect(
-    "mongodb+srv://suprabhakumari2020:suprabha2020@basics.nttqyal.mongodb.net/?retryWrites=true&w=majority&appName=Basics"
+    "mongodb+srv://suprabhakumari2020:<password>@basics.nttqyal.mongodb.net/?retryWrites=true&w=majority&appName=Basics"
   )
   .then(() => console.log("connected to database..."))
   .catch((err) => console.log(err));
